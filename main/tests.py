@@ -1,4 +1,6 @@
 from django.test import TestCase
+from django.urls import reverse
+from django.contrib.auth.models import User
 
 # Create your tests here.
 from django.test import TestCase, Client
@@ -28,7 +30,14 @@ class mainTest(TestCase):
         )
         self.assertTrue(mood.is_mood_strong)
     
+    def setUp(self):
+        # create a test user
+        self.user = User.objects.create_user(username='testuser', password='testpassword')
+
     def test_main_template_uses_correct_page_title(self):
-        response = Client().get('/')
-        html_response = response.content.decode('utf8')
+        # log in the test user
+        self.client.login(username='testuser', password='testpassword')
+
+        response = self.client.get(reverse('main:show_main'))
+        html_response = response.content.decode('utf-8')
         self.assertIn('PBD Mental Health Tracker', html_response)
