@@ -22,7 +22,7 @@ def show_main(request):
         'name': request.user.username,
         'class': 'KKI',
         'mood_entries': mood_entries,
-        'name' : request.user.username
+        'last_login' : request.COOKIES.get('last_login')
     }
 
     return render(request, "main.html", context)
