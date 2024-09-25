@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware', # Added WhiteNoise Middleware from Tutor 4
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -119,10 +120,16 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+if DEBUG:
+    STATICFILES_DIRS = [
+        BASE_DIR / 'static' # refers to /static root project in development mode
+    ]
+else:
+    STATIC_ROOT = BASE_DIR / 'static' # refers to /static root project in production modeSE_DIR / 'static'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CSRF_TRUSTED_ORIGINS = ["http://localhost","http://127.0.0.1","https://pbp.cs.ui.ac.id/andriyo.averill/mentalhealthtrackerbaru", "http://pbp.cs.ui.ac.id/andriyo.averill/mentalhealthtrackerbaru"]
+CSRF_TRUSTED_ORIGINS = ["http://localhost","http://127.0.0.1","https://andriyo-averill-mentalhealthtrackerbaru.pbp.cs.ui.ac.id/", "https://andriyo-averill-mentalhealthtrackerbaru.pbp.cs.ui.ac.id/"]
